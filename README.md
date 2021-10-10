@@ -16,3 +16,7 @@ $ docker-compose up
 
 # Microservice Exchange API(host)
 - http://localhost:5000/swagger
+
+## License
+
+This project is licensed with the [MIT license](LICENSE).
