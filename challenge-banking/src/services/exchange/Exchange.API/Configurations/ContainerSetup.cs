@@ -1,6 +1,7 @@
-﻿using Catalog.API.Filters;
+﻿using Exchange.API.Filters;
 using Exchange.API.Contracts.Requests;
 using Exchange.API.Contracts.Validations;
+using Exchange.API.Helpers;
 using Exchange.Data;
 using Exchange.Data.Interfaces;
 using Exchange.Data.Repositories;
@@ -12,9 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OpenApi.Models;
 using Service.Common.Converters;
 using System.Linq;
+using System.Text;
+using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Exchange.API.Configurations
 {
@@ -24,6 +28,7 @@ namespace Exchange.API.Configurations
         {
             AddMvc(services);
             AddApiDocs(services);
+            AddAuthentication(services, configuration);
             ConfigureDatabaseProvider(services, configuration);
             AddAbstract(services);
             AddServices(services);
@@ -37,7 +42,8 @@ namespace Exchange.API.Configurations
             services.AddMvc(options =>
             {
                 options.Filters.Add(new ApiExceptionFilterAttribute());
-            }).AddJsonOptions(options => {
+            }).AddJsonOptions(options =>
+            {
                 options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
@@ -65,6 +71,58 @@ namespace Exchange.API.Configurations
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Exchange API", Version = "v1" });
+                c.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization using JWT bearer security scheme"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id ="bearerAuth",
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+            });
+        }
+
+        public static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
+        {
+            // configure strongly typed settings objects
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var secretKey = Encoding.ASCII.GetBytes(appSettings.SecretKey);
+
+            services.AddAuthentication(a =>
+            {
+                a.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                a.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(b =>
+            {
+                b.RequireHttpsMetadata = false;
+                b.SaveToken = true;
+                b.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKey),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 

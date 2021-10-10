@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Service.Common.Exceptions;
 using System;
 
-namespace Catalog.API.Filters
+namespace Exchange.API.Filters
 {
     public class ApiExceptionFilterAttribute : ExceptionFilterAttribute 
     {

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.API.Filters
+namespace Exchange.API.Filters
 {
     public class ValidateModelFilter : IAsyncActionFilter
     {

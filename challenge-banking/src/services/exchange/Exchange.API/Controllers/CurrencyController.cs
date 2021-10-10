@@ -4,6 +4,8 @@ using Exchange.API.Contracts.Responses;
 using Exchange.Domain.Models;
 using Exchange.Service;
 using Exchange.Service.ResourceParameters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Service.Common.Collection;
@@ -17,6 +19,7 @@ using System.Threading.Tasks;
 
 namespace Exchange.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/currencies")]
     [ApiController]
     public class CurrencyController : ControllerBase

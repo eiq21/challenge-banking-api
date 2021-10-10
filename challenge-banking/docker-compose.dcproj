@@ -5,8 +5,8 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>8eff46ba-c639-4552-9d9f-12769ed0e04f</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>exchange.api</DockerServiceName>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
+    <DockerServiceName>identity.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

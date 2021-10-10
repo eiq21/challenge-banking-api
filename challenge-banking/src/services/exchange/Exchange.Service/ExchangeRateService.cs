@@ -32,6 +32,14 @@ namespace Exchange.Service
         }
         public async Task<ExchangeRate> AddExchangeRate(ExchangeRate exchangeRate)
         {
+            var existsExchangeRateToday = await exchangeRateRepository.GetSingleAsync(a => a.ExchangeRateAt.Date == DateTime.Now.Date && a.IsActive == true);
+            if(existsExchangeRateToday != null)
+            {
+                existsExchangeRateToday.IsActive = false;
+                exchangeRateRepository.Update(existsExchangeRateToday);
+
+            }
+
             await exchangeRateRepository.AddAsync(exchangeRate);
             await unitOfWork.SaveChangesAsync();
             return exchangeRate;

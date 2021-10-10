@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Exchange.API.Contracts.Responses;
+using Exchange.Domain.Helpers;
 using Exchange.Domain.Models;
 
 namespace Exchange.API.Contracts.Mappings
@@ -13,6 +14,8 @@ namespace Exchange.API.Contracts.Mappings
 
             CreateMap<ExchangeRate, ExchangeRateResponse>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.ExchangeRateId));
+
+            CreateMap<QuoteExchangeRate, QuoteExchangeRateResponse>();
 
         }
     }

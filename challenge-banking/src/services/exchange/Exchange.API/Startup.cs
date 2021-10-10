@@ -1,5 +1,7 @@
 using Exchange.API.Configurations;
 using Exchange.API.Configurations.Middleware;
+using Exchange.API.Helpers;
+using Exchange.API.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,11 +29,20 @@ namespace Exchange.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger();
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(swaggerOptions)).Bind(swaggerOptions);
 
-            app.UseSwaggerUI(s =>
+            // configure strongly typed settings objects
+            var appSettingsSection = new AppSettings();
+            Configuration.GetSection(nameof(appSettingsSection)).Bind(appSettingsSection);
+
+            app.UseSwagger(options => {
+                options.RouteTemplate = swaggerOptions.JsonRoute;
+            });
+
+            app.UseSwaggerUI(options =>
             {
-                s.SwaggerEndpoint("/swagger/v1/swagger.json", "Exchange API");
+                options.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
             });
 
             if (env.IsDevelopment())
@@ -42,6 +53,9 @@ namespace Exchange.API
             app.ConfigureExceptionHandler();
 
             app.UseRouting();
+
+            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
