@@ -1,14 +1,13 @@
-using Exchange.API.Configurations;
-using Exchange.API.Configurations.Middleware;
-using Exchange.API.Helpers;
-using Exchange.API.Options;
+using Identity.API.Configurations;
+using Identity.API.Configurations.Middleware;
+using Identity.API.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Exchange.API
+namespace Identity.API
 {
     public class Startup
     {
@@ -30,11 +29,8 @@ namespace Exchange.API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             var swaggerOptions = new SwaggerOptions();
-            Configuration.GetSection(nameof(swaggerOptions)).Bind(swaggerOptions);
 
-            // configure strongly typed settings objects
-            var appSettingsSection = new AppSettings();
-            Configuration.GetSection(nameof(appSettingsSection)).Bind(appSettingsSection);
+            Configuration.GetSection(nameof(swaggerOptions)).Bind(swaggerOptions);
 
             app.UseSwagger(options => {
                 options.RouteTemplate = swaggerOptions.JsonRoute;
@@ -42,7 +38,7 @@ namespace Exchange.API
 
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint(swaggerOptions.UiEndpoint, swaggerOptions.Description);
+                options.SwaggerEndpoint(swaggerOptions.UiEndpoint,swaggerOptions.Description);
             });
 
             if (env.IsDevelopment())

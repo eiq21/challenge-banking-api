@@ -1,0 +1,35 @@
+version: '3.4'
+
+services:
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
+    container_name: identity-api
+    networks:
+     - local
+    ports:
+     - '7000:80'
+    volumes:
+     - data:/data
+    build:
+      context: .
+      dockerfile: src/services/identity/Identity.API/Dockerfile
+
+  exchange.api:
+    image: ${DOCKER_REGISTRY-}exchangeapi
+    container_name: exchange-api
+    networks:
+     - local
+    ports:
+     - '5000:80'
+    volumes:
+     - data:/data
+    build:
+      context: .
+      dockerfile: src/services/exchange/Exchange.API/Dockerfile
+
+networks:
+  local:
+   driver: bridge
+volumes:
+  data: {}
+

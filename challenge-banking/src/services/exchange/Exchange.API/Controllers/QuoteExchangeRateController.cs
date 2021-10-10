@@ -2,12 +2,15 @@
 using Exchange.API.Contracts.Requests;
 using Exchange.API.Contracts.Responses;
 using Exchange.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Exchange.API.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/quoteExchangeRate")]
     [ApiController]
     public class QuoteExchangeRateController : ControllerBase
