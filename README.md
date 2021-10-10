@@ -2,7 +2,7 @@
 Desafío técnico net core
 ![image](https://user-images.githubusercontent.com/18255776/136705403-5cea581f-9c65-464a-9996-fab7e7300281.png)
 
-# Instrucciónes de ejecución
+# Instrucciones de ejecución
 
 Ejecutar el siguiente comando en la raíz donde se encuentra el archivo docker-compose.yml
 
