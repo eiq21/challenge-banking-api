@@ -14,5 +14,5 @@ $ docker-compose up
 # Microservice Identity API(host)
 - http://localhost:7000/swagger
 
-# Microservice Exchange(host)
+# Microservice Exchange API(host)
 - http://localhost:5000/swagger
