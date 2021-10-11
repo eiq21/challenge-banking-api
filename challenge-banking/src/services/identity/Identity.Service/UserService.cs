@@ -35,7 +35,7 @@ namespace Identity.Service
         {
             var userExists = await userRepository.FindByAsync(a => a.Email == user.Email);
             if (userExists.Any())
-                throw new ApplicationException("Email is arelady taken");
+                throw new BadRequestException("Email is arelady taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);

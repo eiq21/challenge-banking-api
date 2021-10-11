@@ -98,6 +98,11 @@ namespace Exchange.API.Configurations
             });
         }
 
+        public static void AddCofigureCors(IServiceCollection services)
+        {
+            services.AddCors();
+        }
+
         public static void AddAuthentication(IServiceCollection services, IConfiguration configuration)
         {
             // configure strongly typed settings objects
