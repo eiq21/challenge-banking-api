@@ -10,21 +10,21 @@ Ejecutar el siguiente comando en la raíz donde se encuentra el archivo docker-c
 $ docker-compose build
 $ docker-compose up
 ```
-# Microservice Identity API(host)
+### Microservice Identity API(host) 
 - http://localhost:7000/swagger
 
-# Microservice Exchange API(host)
+### Microservice Exchange API(host) 
 - http://localhost:5000/swagger
 
 
-# Instrucciones de ejecución - Frontend
-
-Ejecutar el siguiente comando en la raíz donde se encuentra el proyecto cliente web angular
+# Instrucciones de ejecución - Frontend 
+Ejecutar el siguiente comando en la raíz donde se encuentra el proyecto cliente web angular (challenge-banking\src\clients\exchange-web)
 
 ```bash
 $ npm install
 $ ng serve -o
 ```
+-  Consumo de servicio de autenticación JWT
 
 ## License
 
