@@ -42,7 +42,6 @@ namespace Identity.API.Controllers
                 Email = userCreateRequest.Email
             };
             await userService.AddUser(entity, userCreateRequest.Password);
-            UserResponse response = mapper.Map<UserResponse>(entity);
             return NoContent();
         }
 

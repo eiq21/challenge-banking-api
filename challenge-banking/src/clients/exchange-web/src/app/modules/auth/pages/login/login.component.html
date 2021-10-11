@@ -1,0 +1,36 @@
+<div fxLayoutAlign="center center" fxFlexFill class="main-div">
+  <mat-card fxFlex="25">
+    <mat-toolbar color="primary">Login Page</mat-toolbar>
+    <form
+      (ngSubmit)="login()"
+      [formGroup]="credentials"
+      fxLayoutAlign="stretch"
+      fxLayout="column"
+      class="login-form"
+    >
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="email"
+          placeholder="Email"
+          type="Email"
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          formControlName="password"
+          placeholder="Password"
+          type="Password"
+        />
+      </mat-form-field>
+      <button
+        [disabled]="!credentials.valid || isLoading"
+        mat-button
+        color="primary"
+      >
+        Login
+      </button>
+    </form>
+  </mat-card>
+</div>

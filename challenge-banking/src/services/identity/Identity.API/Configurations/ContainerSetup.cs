@@ -95,17 +95,7 @@ namespace Identity.API.Configurations
 
         public static void AddCofigureCors(IServiceCollection services)
         {
-            services.AddCors(c =>
-            {
-                c.AddPolicy("EnableCors", builder =>
-                 {
-                     builder.SetIsOriginAllowedToAllowWildcardSubdomains()
-                     .AllowAnyOrigin()
-                     .AllowAnyMethod()
-                     .AllowAnyHeader()
-                     .AllowCredentials();
-                 });
-            });
+            services.AddCors();
         }
 
         public static void AddApiDocs(IServiceCollection services)
